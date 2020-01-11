@@ -4,9 +4,9 @@ import Skill from "./Skill";
 
 export const PropertiesPanel = (props) => {
 
+
     const user = props.navigation.getParam("user", "NoData");
     const categories = Object.values(user.categories);
-    console.log(categories);
     return (
         <View style={styles.center}>
             <View style={styles.marginsStack}>
@@ -32,6 +32,12 @@ export const PropertiesPanel = (props) => {
         </View>
     )
 };
+
+
+PropertiesPanel.navigationOptions = {
+    headerShown: false,
+};
+
 
 const styles = StyleSheet.create({
     center: {
