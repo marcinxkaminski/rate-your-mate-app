@@ -3,16 +3,16 @@ import { StyleSheet, Text, View, TouchableOpacity, Image  } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import * as Font from 'expo-font';
+import { AppLoading } from 'expo';
+
 
 export default class UserList extends React.Component{
 
-    static navigationOptions = {
-        title: 'MainContainer',
-    };
-
     state = {
         users: [],
-        nav: this.props.nav
+        nav: this.props.nav,
+        dataLoaded: false
     }
 
     componentDidMount = () => {
@@ -41,7 +41,21 @@ export default class UserList extends React.Component{
         });
     }
 
-    render(){
+    fetchFonts = () => {
+        return Font.loadAsync({
+          'MerriweatherSans': require('../../assets/fonts/Questrial-Regular.ttf'),
+        });
+    };
+
+    render = () => {
+        if(this.state.dataLoaded == false){
+            return(
+                <AppLoading
+                    startAsync={this.fetchFonts}
+                    onFinish={() => this.setState({dataLoaded: true})}
+                />
+            )
+        }
         return(
             <View >
                 <FlatList 
@@ -64,7 +78,7 @@ export default class UserList extends React.Component{
                             </View>
                             <View style={styles.starsContainer}>
                                 <Text style={styles.starText}>{item.stars}</Text> 
-                                <Icon name="star-outline" size={35} color="#430098"/>
+                                <Icon name="star-outline" size={35} color="#79589F"/>
                             </View>
                         </TouchableOpacity>
                     )}
@@ -77,45 +91,39 @@ export default class UserList extends React.Component{
 
 const styles = StyleSheet.create({
     listContainer: {
-        width: '90%',
+        width: '100%',
         flex: 1, 
         flexDirection: 'column',
-        borderWidth: 1
     },
     userLabelContainer: {
         flex: 1, 
         flexDirection: 'row',
-        borderWidth: 1
+        borderBottomWidth: 1,
+        paddingHorizontal: '5%'
     },
     nameText: {
-        fontSize: 15
+        fontSize: 15,
+        fontFamily: "MerriweatherSans",
+        fontWeight: 'bold'
     },
     positionText: {
         fontSize: 13
     },
-    customContainer: {
-        padding: 5,
-        paddingLeft: 10,
-        paddingRight: 15,
-        borderWidth: 1,
-        justifyContent: 'flex-start'
-    },
     imageContainer: {
         width: '25%',
         padding: 5,
-        borderWidth: 1,
         alignItems: 'center'
     },
     infoContainer: {
         width: '50%',
         padding: 5,
+        paddingTop: 13,
         paddingLeft: 10,
         paddingRight: 15,
         justifyContent: 'flex-start'
     },
     starsContainer: {
         width: '25%',
-        borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row'
