@@ -32,7 +32,7 @@ export default class UserList extends React.Component{
         .then((responseJSON) => {
             
             console.log(responseJSON); 
-            this.setState({users: responseJSON})
+            this.setState({users: Object.values(responseJSON)})
 
         })
         .catch((error) =>{
