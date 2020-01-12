@@ -90,9 +90,6 @@ export default class UserList extends React.Component{
     }
 
     fetchFonts = () => {
-        return Font.loadAsync({
-          'MerriweatherSans': require('../../assets/fonts/SquadaOne-Regular.ttf'),
-        });
     };
 
     onSelectedItemsChange = (selectedItems) => {
@@ -283,7 +280,6 @@ const styles = StyleSheet.create({
     },
     nameText: {
         fontSize: 15,
-        fontFamily: "MerriweatherSans",
         fontWeight: 'bold'
     },
     positionText: {

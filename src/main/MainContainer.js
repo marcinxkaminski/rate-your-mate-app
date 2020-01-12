@@ -1,16 +1,14 @@
-import React, { version } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import React, {version} from 'react';
+import {StyleSheet, Text, View, Button} from 'react-native';
 
 import UserList from '../components/UserList'
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 
-
-
-export default class MainContainer extends React.Component{
+export default class MainContainer extends React.Component {
 
     static navigationOptions = {
         headerShown: false,
@@ -18,35 +16,42 @@ export default class MainContainer extends React.Component{
     };
 
 
-
     state = {
-        nav : this.props.navigation,
+        nav: this.props.navigation,
         searchText: ''
-    }
+    };
 
     fetchFonts = () => {
-        return Font.loadAsync({
-          'MerriweatherSans': require('../../assets/fonts/SquadaOne-Regular.ttf'),
-        });
+        // return Font.loadAsync({
+        //   'MerriweatherSans': require('../../assets/fonts/SquadaOne-Regular.ttf'),
+        // });
     };
-    
+
     render = () => {
-        if(this.state.dataLoaded==false){
-            return(
+        if (this.state.dataLoaded == false) {
+            return (
                 <AppLoading
                     startAsync={this.fetchFonts}
                     onFinish={() => this.setState({dataLoaded: true})}
                 />
             )
         }
-        return(
+        return (
             <View style={styles.container}>
                 <View style={styles.searchContainer}>
-                    <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-end', paddingBottom: 10, width: '90%', justifyContent: 'flex-end'}}>
+                    <View style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        alignItems: 'flex-end',
+                        paddingBottom: 10,
+                        width: '90%',
+                        justifyContent: 'flex-end'
+                    }}>
                         <View style={{paddingRight: '59%'}}>
-                            <Text style={{fontFamily: 'MerriweatherSans', fontSize: 30, fontWeight: 'bold', color: 'white'}}>RYR</Text>
+                            <Text style={{fontSize: 30, fontWeight: 'bold', color: 'white'}}>RYM</Text>
                         </View>
-                        <MaterialIcon style={{paddingRight: 10}} name="podium" size={35} color="white" onPress={()=>this.props.navigation.navigate('Ranking')}/>
+                        <MaterialIcon style={{paddingRight: 10}} name="podium" size={35} color="white"
+                                      onPress={() => this.props.navigation.navigate('Ranking')}/>
                         <Icon name="user-astronaut" size={35} color="white"/>
                     </View>
                     <TextInput
@@ -86,4 +91,4 @@ const styles = StyleSheet.create({
         marginTop: 5,
         fontSize: 15
     },
-  });
+});

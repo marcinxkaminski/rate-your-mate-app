@@ -1,20 +1,24 @@
 import React from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import {FlatList} from 'react-native-gesture-handler';
 
 
 class Ranking extends React.Component {
 
     state = {
-        monthlyUsers: [],
-        monthlyCategories: []
+        monthlyUsers: [{name: "bob"}, {name: "bob"}, {name: "bob"}],
+        weeklyUsers: [{name: "bob"}, {name: "bob"}, {name: "bob"}],
+        weeklyCategories: [{name: "bob"}, {name: "bob"}, {name: "bob"}],
+        monthlyCategories: [{name: "bob"}, {name: "bob"}, {name: "bob"}]
 
     };
 
     componentDidMount() {
         this.getRanks();
     }
-
+    static navigationOptions = {
+        headerShown: false,
+    };
 
     getRanks = () => {
         var header = new Headers({
@@ -33,6 +37,8 @@ class Ranking extends React.Component {
                 this.setState({
                     monthlyUsers: Object.values(responseJSON.monthly.users).slice(0, 3),
                     monthlyCategories: Object.values(responseJSON.monthly.categories).slice(0, 3),
+                    weeklyUsers: Object.values(responseJSON.weekly.users).slice(0, 3),
+                    weeklyCategories: Object.values(responseJSON.weekly.categories).slice(0, 3),
                     // weeklyUsers: responseJSON.weekly
                 });
                 console.log(this.state.monthlyUsers)
@@ -43,47 +49,54 @@ class Ranking extends React.Component {
     };
 
     render = () => {
-        console.log("who");
-        console.log(this.state.monthlyUsers);
         return (
-            <View style={styles.statBoxHolder}>
-                <ScrollView style={styles.scrollStyle}>
-                    <View style={styles.statBox}>
-                        <Text style={styles.boxTitle}>Top Week Categories</Text>
-                        <View style={styles.statBoxElemBox}>
-                            <FlatList
-                                data={this.state.monthlyUsers}
-                                randerItem={({item}) =>
-                                    <View>
-                                        <Text>{item.id}</Text>
-                                    </View>
-                                }
-                                keyExtractor={item =>item.id}
-                            />
-                        </View>
+
+
+            <View style={styles.statVertical}>
+                <View style={styles.rym}>
+                    <Text style={{fontSize: 30, fontWeight: 'bold', color: 'white'}}>RYM</Text>
+                </View>
+                <View style={styles.statBox}>
+                    <Text style={styles.boxTitle}>Top 3 Categories</Text>
+                    <Text style={styles.ofThe}>of the week</Text>
+                    <View style={styles.statBoxElemBox}>
+                        <Text>#1 {this.state.weeklyCategories[0].name[0].toUpperCase() + this.state.weeklyCategories[0].name.slice(1)}</Text>
+                        <Text>#2 {this.state.weeklyCategories[1].name[0].toUpperCase() + this.state.weeklyCategories[1].name.slice(1)}</Text>
+                        <Text>#3 {this.state.weeklyCategories[2].name[0].toUpperCase() + this.state.weeklyCategories[2].name.slice(1)}</Text>
                     </View>
-                    <View style={styles.statBox}>
-                        <Text>Top Week Categories</Text>
-                        <View style={styles.statBoxElemBox}>
-                            <View style={styles.statBoxElem}>
-                            </View>
-                        </View>
+                </View>
+
+                <View style={styles.statBox}>
+                    <Text style={styles.boxTitle}>Top 3 Employees</Text>
+                    <Text style={styles.ofThe}>of the week</Text>
+                    <View style={styles.statBoxElemBox}>
+                        <Text>#1 {this.state.weeklyUsers[0].name}</Text>
+                        <Text>#2 {this.state.weeklyUsers[1].name}</Text>
+                        <Text>#3 {this.state.weeklyUsers[2].name}</Text>
                     </View>
-                    <View style={styles.statBox}>
-                        <Text>Top Week Categories</Text>
-                        <View style={styles.statBoxElemBox}>
-                            <View style={styles.statBoxElem}>
-                            </View>
-                        </View>
+                </View>
+
+                <View style={styles.statBox}>
+                    <Text style={styles.boxTitle}>Top 3 Employees</Text>
+                    <Text style={styles.ofThe}>of the Month</Text>
+                    <View style={styles.statBoxElemBox}>
+                        <Text>#1 {this.state.monthlyUsers[0].name}</Text>
+                        <Text>#2 {this.state.monthlyUsers[1].name}</Text>
+                        <Text>#3 {this.state.monthlyUsers[2].name}</Text>
                     </View>
-                    <View style={styles.statBox}>
-                        <Text>Top Week Categories</Text>
-                        <View style={styles.statBoxElemBox}>
-                            <View style={styles.statBoxElem}>
-                            </View>
-                        </View>
+                </View>
+
+                <View style={styles.statBox}>
+                    <Text style={styles.boxTitle}>Top 3 Categories</Text>
+                    <Text style={styles.ofThe}>of the Month</Text>
+                    <View style={styles.statBoxElemBox}>
+                        <Text>#1 {this.state.monthlyCategories[0].name[0].toUpperCase() + this.state.monthlyCategories[0].name.slice(1)}</Text>
+                        <Text>#2 {this.state.monthlyCategories[1].name[0].toUpperCase() + this.state.monthlyCategories[1].name.slice(1)}</Text>
+                        <Text>#3 {this.state.monthlyCategories[2].name[0].toUpperCase() + this.state.monthlyCategories[2].name.slice(1)}</Text>
                     </View>
-                </ScrollView>
+                </View>
+
+
             </View>
         )
     }
@@ -94,53 +107,51 @@ export default Ranking;
 
 
 const styles = StyleSheet.create({
-    statBoxHolder: {
-        flexDirection: 'row',
+    statVertical: {
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 1,
-        height: '100%',
-        paddingVertical: 10,
-        width: '100%'
-
-
-    },
-
-    scrollStyle: {
         width: '100%',
-        borderWidth: 1,
+        height: '95%',
+
     },
     boxTitle: {
         fontWeight: 'bold',
         fontSize: 20,
         color: '#430098',
     },
+    ofThe: {
+        fontSize: 16,
+        color: '#430098',
+    },
     statBox: {
         paddingTop: 5,
         margin: 5,
+        marginTop: 30,
         flex: 1,
         borderWidth: 4,
         width: '90%',
         flexDirection: 'column',
         alignItems: 'center',
         borderColor: '#430098',
-        // backgroundColor: '#',
         borderRadius: 30,
     },
-
-    statBoxElemBox: {
-        borderWidth: 1,
+    rym:{
+      backgroundColor  :'#79589F',
+        width: '100%',
+        height: 130,
         flexDirection: 'column',
         justifyContent: 'center',
-        width: '100%',
-        alignItems: 'stretch'
-    },
-    statBoxElem: {
-        borderWidth: 1,
-        height: 70,
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 4,
+        alignItems: 'center'
 
-    }
+    },
+    statBoxElemBox: {
+        marginTop: 8,
+        flexDirection: 'column',
+        borderColor: '#430098',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        paddingLeft: 90,
+        width: '100%',
+    },
 });
