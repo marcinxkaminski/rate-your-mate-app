@@ -1,19 +1,59 @@
-import {StyleSheet, View, TouchableWithoutFeedback} from "react-native";
-import React from "react";
+import {StyleSheet, View, TouchableWithoutFeedback, Text,TouchableOpacity} from "react-native";
+import React, { useState } from "react";
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Modal from "react-native-modal";
+import { TextInput } from "react-native-gesture-handler";
+
 
 const AddCategorry = ({userId}) => {
+    const [isOpen,setOpen]=useState(false);
+    const [newCategory, setNewCategory]=useState('');
+    const [categoryFocus, setFocus]=useState(false);
     return (
-        <TouchableWithoutFeedback onPress={() => addCattegory(userId)}>
+        <TouchableWithoutFeedback onPress={() => addCattegory(newCategory, userId, setOpen)}>
+            <View>
             <View style={styles.addButton}>
                 <MaterialIcon name="plus" size={55} color="#FBFBFD"/>
+            </View>
+            <Modal 
+                isVisible={isOpen}
+                style={styles.modal}
+                backdropColor={'rgba(52, 52, 52, 0.5)'}
+                backdropOpacity={1}
+                animationIn={'bounceInDown'}
+                animationOut={'bounceOutUp'}
+                animationInTiming={500}
+                animationOutTiming={500}
+                backdropTransitionInTiming={500}
+                backdropTransitionOutTiming={500}
+                >
+                <View style={{ flex: 1, backgroundColor: '#FBFBFD', padding: 10, justifyContent:'center', alignItems: 'center', borderRadius: 10}}>
+                    <TextInput value={newCategory} onChangeText={setNewCategory} onFocus={() => setFocus(true)} onEndEditing={() => setFocus(false)}
+                         style={categoryFocus ? styles.authTextInputOnFocus : styles.authTextInput}
+                    />
+                    <TouchableOpacity 
+                        style={{
+                            backgroundColor: '#79589F', 
+                            margin: 15, 
+                            borderRadius: 10,
+                            width: 230, 
+                            height: 35, 
+                            justifyContent:'center', 
+                            alignItems: 'center'}} 
+                        onPress={() => {setOpen(false);addRlyCategory(newCategory, userId, setOpen)}}
+                        >
+                        <Text style={{fontSize: 15, fontWeight: 'bold', color: 'white'}}>Add category</Text>
+                    </TouchableOpacity>
+                </View>
+                </Modal>
             </View>
         </TouchableWithoutFeedback>
     )
 };
 
-
-const addCattegory = (usertId) => {
+const addRlyCategory = (newCategory, userId, setOpen) => {
+    console.log('wwwww')
+    setOpen(false);
     fetch('http://rate-your-mate.herokuapp.com/api/v1/categories', {
         method: 'POST',
         headers: {
@@ -22,12 +62,16 @@ const addCattegory = (usertId) => {
         },
         body: JSON.stringify({
             category: {
-                name: "PingPong2311",
+                name: newCategory,
             },
         }),
     }).then((response) => response.json()).then((json) => {
-        starCategory(json.id, usertId)
+        starCategory(json.id, userId)
     });
+}
+
+const addCattegory = (newCategory, usertId, setOpen) => {
+    setOpen(true); 
 };
 
 
@@ -70,7 +114,36 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#79589F',
         alignItems: 'center'
-    }
+    },
+    modal: {
+        backgroundColor: 'rgba(52, 52, 52, 0)',
+        marginHorizontal: '10%',
+        marginTop: '45%',
+        marginBottom: '10%',
+        borderRadius: 5,
+        alignItems: undefined,
+        justifyContent: undefined,
+    },
+    authTextInput: {
+        borderWidth: 2,
+        borderColor: '#eee',
+        borderRadius: 7,
+        backgroundColor: '#FBFBFD',
+        width: 230,
+        padding: 5,
+        paddingLeft: 10,
+        marginTop: 5,
+        fontSize: 15
+    },
+    authTextInputOnFocus: {
+        borderWidth: 2,
+        borderColor: '#79589F',
+        borderRadius: 7,
+        width: 230,
+        padding: 5,
+        marginTop: 5,
+        fontSize: 15
+    },
 });
 
 
