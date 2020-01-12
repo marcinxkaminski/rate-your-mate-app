@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { version } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 import UserList from '../components/UserList'
@@ -14,18 +14,38 @@ export default class MainContainer extends React.Component{
 
     static navigationOptions = {
         headerShown: false,
+        dataLoaded: false,
     };
+
+
 
     state = {
         nav : this.props.navigation,
         searchText: ''
     }
+
+    fetchFonts = () => {
+        return Font.loadAsync({
+          'MerriweatherSans': require('../../assets/fonts/SquadaOne-Regular.ttf'),
+        });
+    };
     
     render = () => {
+        if(this.state.dataLoaded==false){
+            return(
+                <AppLoading
+                    startAsync={this.fetchFonts}
+                    onFinish={() => this.setState({dataLoaded: true})}
+                />
+            )
+        }
         return(
             <View style={styles.container}>
                 <View style={styles.searchContainer}>
                     <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-end', paddingBottom: 10, width: '90%', justifyContent: 'flex-end'}}>
+                        <View style={{paddingRight: '59%'}}>
+                            <Text style={{fontFamily: 'MerriweatherSans', fontSize: 30, fontWeight: 'bold', color: 'white'}}>RYR</Text>
+                        </View>
                         <MaterialIcon style={{paddingRight: 10}} name="podium" size={35} color="white" onPress={()=>this.props.navigation.navigate('Ranking')}/>
                         <Icon name="user-astronaut" size={35} color="white"/>
                     </View>

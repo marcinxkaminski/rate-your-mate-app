@@ -91,7 +91,7 @@ export default class UserList extends React.Component{
 
     fetchFonts = () => {
         return Font.loadAsync({
-          'MerriweatherSans': require('../../assets/fonts/Questrial-Regular.ttf'),
+          'MerriweatherSans': require('../../assets/fonts/SquadaOne-Regular.ttf'),
         });
     };
 
@@ -229,7 +229,7 @@ export default class UserList extends React.Component{
                     animationOutTiming={500}
                     backdropTransitionInTiming={500}
                     backdropTransitionOutTiming={500}>
-                    <View style={{ flex: 1, borderWidth:1, height: '100%', backgroundColor: '#FBFBFD', padding: 10}}>
+                    <View style={{ flex: 1, borderRadius: 10, height: '100%', backgroundColor: '#FBFBFD', padding: 10}}>
                         <View style={{height: '50%'}}>
                         <SectionedMultiSelect
                             items={this.state.categories}
