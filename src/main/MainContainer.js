@@ -28,6 +28,7 @@ export default class MainContainer extends React.Component{
     }
 }
 
+
 const styles = StyleSheet.create({
     container: {
         marginTop: '7%',

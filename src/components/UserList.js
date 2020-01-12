@@ -173,7 +173,7 @@ export default class UserList extends React.Component{
                         <TouchableOpacity
                             style={styles.userLabelContainer}
                             onPress={() => this.state.nav.navigate('PropertiesPanel', {user: item})}
-                            >  
+                            >
                             <View style={styles.imageContainer}>
                                 <Image
                                     style={{width: 60, height: 60, borderRadius: 30}}
@@ -185,7 +185,7 @@ export default class UserList extends React.Component{
                                 <Text style={styles.positionText}>{item.position}</Text>
                             </View>
                             <View style={styles.starsContainer}>
-                                <Text style={styles.starText}>{item.stars}</Text> 
+                                <Text style={styles.starText}>{item.stars}</Text>
                                 <Icon name="star-outline" size={35} color="#79589F"/>
                             </View>
                         </TouchableOpacity>
@@ -234,11 +234,11 @@ export default class UserList extends React.Component{
 const styles = StyleSheet.create({
     listContainer: {
         width: '100%',
-        flex: 1, 
+        flex: 1,
         flexDirection: 'column',
     },
     userLabelContainer: {
-        flex: 1, 
+        flex: 1,
         flexDirection: 'row',
         borderBottomWidth: 1,
         paddingHorizontal: '5%'
@@ -305,4 +305,3 @@ const styles = StyleSheet.create({
         justifyContent: undefined,
     }
   });
-  
