@@ -20,7 +20,7 @@ export default class UserList extends React.Component{
         categories: [
             {
                 name: 'Categories',
-                id: 0, 
+                id: 0,
                 children: [
                     {
                         name: 'java',
@@ -30,7 +30,7 @@ export default class UserList extends React.Component{
                         name: 'javascript',
                         id: 16,
                       },
-                ] 
+                ]
             }
             ],
         selectedItems: [],
@@ -77,9 +77,9 @@ export default class UserList extends React.Component{
             var obj = [
                 {
                     name: 'Categories',
-                    id: 0, 
+                    id: 0,
                     children: responseJSON
-                }   
+                }
             ]
 
             this.setState({categories: obj})
@@ -167,16 +167,16 @@ export default class UserList extends React.Component{
         return result;
     }
 
-    ifCommonElement(array1, array2) { 
-        for(let i = 0; i < array1.length; i++) { 
-            for(let j = 0; j < array2.length; j++) { 
-                if(array1[i] === array2[j]) { 
-                    return true; 
-                } 
-            } 
-        } 
-        return false;  
-    } 
+    ifCommonElement(array1, array2) {
+        for(let i = 0; i < array1.length; i++) {
+            for(let j = 0; j < array2.length; j++) {
+                if(array1[i] === array2[j]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     render = () => {
         if(this.state.dataLoaded == false){
@@ -188,8 +188,8 @@ export default class UserList extends React.Component{
             )
         }
         return(
-            <View style={{height: '75%', width: '100%'}}>
-                <FlatList 
+            <View style={{height: '80%', width: '100%'}}>
+                <FlatList
                     style={styles.listContainer}
                     data={this.state.filtredUsers}
                     renderItem={({item}) => (
@@ -218,7 +218,7 @@ export default class UserList extends React.Component{
                 <TouchableOpacity style={styles.searchBox} onPress={this.firstSearch}>
                     <Icon name="cloud-search"  size={35} color="white" />
                 </TouchableOpacity>
-                <Modal 
+                <Modal
                     isVisible={this.state.searchModal}
                     style={styles.modal}
                     backdropColor={'rgba(52, 52, 52, 0.5)'}
@@ -317,8 +317,8 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         width:80,
-        position: 'absolute',                                          
-        bottom: 10,                                                    
+        position: 'absolute',
+        bottom: 10,
         right: 20,
         height:80,
         backgroundColor:'#79589F',
