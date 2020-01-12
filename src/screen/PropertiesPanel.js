@@ -61,7 +61,7 @@ export const PropertiesPanel = (props) => {
                                 </View>
                             </TouchableWithoutFeedback>}
                         keyExtractor={item => item.id}
-                        ListFooterComponent={<AddCategorry userId={user.id}></AddCategorry>}
+                        ListFooterComponent={<AddCategorry userId={user.id} setCategories={setCategories}></AddCategorry>}
                     />
 
                 </View>

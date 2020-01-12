@@ -1,57 +1,69 @@
-import {StyleSheet, View, TouchableWithoutFeedback, Text,TouchableOpacity} from "react-native";
-import React, { useState } from "react";
+import {StyleSheet, View, TouchableWithoutFeedback, Text, TouchableOpacity} from "react-native";
+import React, {useState} from "react";
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Modal from "react-native-modal";
-import { TextInput } from "react-native-gesture-handler";
+import {TextInput} from "react-native-gesture-handler";
 
 
-const AddCategorry = ({userId}) => {
-    const [isOpen,setOpen]=useState(false);
-    const [newCategory, setNewCategory]=useState('');
-    const [categoryFocus, setFocus]=useState(false);
+const AddCategorry = ({userId, setCategories}) => {
+    const [isOpen, setOpen] = useState(false);
+    const [newCategory, setNewCategory] = useState('');
+    const [categoryFocus, setFocus] = useState(false);
     return (
         <TouchableWithoutFeedback onPress={() => addCattegory(newCategory, userId, setOpen)}>
             <View>
-            <View style={styles.addButton}>
-                <MaterialIcon name="plus" size={55} color="#FBFBFD"/>
-            </View>
-            <Modal 
-                isVisible={isOpen}
-                style={styles.modal}
-                backdropColor={'rgba(52, 52, 52, 0.5)'}
-                backdropOpacity={1}
-                animationIn={'bounceInDown'}
-                animationOut={'bounceOutUp'}
-                animationInTiming={500}
-                animationOutTiming={500}
-                backdropTransitionInTiming={500}
-                backdropTransitionOutTiming={500}
-                >
-                <View style={{ flex: 1, backgroundColor: '#FBFBFD', padding: 10, justifyContent:'center', alignItems: 'center', borderRadius: 10}}>
-                    <TextInput value={newCategory} onChangeText={setNewCategory} onFocus={() => setFocus(true)} onEndEditing={() => setFocus(false)}
-                         style={categoryFocus ? styles.authTextInputOnFocus : styles.authTextInput}
-                    />
-                    <TouchableOpacity 
-                        style={{
-                            backgroundColor: '#79589F', 
-                            margin: 15, 
-                            borderRadius: 10,
-                            width: 230, 
-                            height: 35, 
-                            justifyContent:'center', 
-                            alignItems: 'center'}} 
-                        onPress={() => {setOpen(false);addRlyCategory(newCategory, userId, setOpen)}}
-                        >
-                        <Text style={{fontSize: 15, fontWeight: 'bold', color: 'white'}}>Add category</Text>
-                    </TouchableOpacity>
+                <View style={styles.addButton}>
+                    <MaterialIcon name="plus" size={55} color="#FBFBFD"/>
                 </View>
+                <Modal
+                    isVisible={isOpen}
+                    style={styles.modal}
+                    backdropColor={'rgba(52, 52, 52, 0.5)'}
+                    backdropOpacity={1}
+                    animationIn={'bounceInDown'}
+                    animationOut={'bounceOutUp'}
+                    animationInTiming={500}
+                    animationOutTiming={500}
+                    backdropTransitionInTiming={500}
+                    backdropTransitionOutTiming={500}
+                >
+                    <View style={{
+                        flex: 1,
+                        backgroundColor: '#FBFBFD',
+                        padding: 10,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 10
+                    }}>
+                        <TextInput value={newCategory} onChangeText={setNewCategory} onFocus={() => setFocus(true)}
+                                   onEndEditing={() => setFocus(false)}
+                                   style={categoryFocus ? styles.authTextInputOnFocus : styles.authTextInput}
+                        />
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: '#79589F',
+                                margin: 15,
+                                borderRadius: 10,
+                                width: 230,
+                                height: 35,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                            onPress={() => {
+                                setOpen(false);
+                                addRlyCategory(newCategory, userId, setOpen,setCategories)
+                            }}
+                        >
+                            <Text style={{fontSize: 15, fontWeight: 'bold', color: 'white'}}>Add category</Text>
+                        </TouchableOpacity>
+                    </View>
                 </Modal>
             </View>
         </TouchableWithoutFeedback>
     )
 };
 
-const addRlyCategory = (newCategory, userId, setOpen) => {
+const addRlyCategory = (newCategory, userId, setOpen,setCategories) => {
     console.log('wwwww')
     setOpen(false);
     fetch('http://rate-your-mate.herokuapp.com/api/v1/categories', {
@@ -66,18 +78,16 @@ const addRlyCategory = (newCategory, userId, setOpen) => {
             },
         }),
     }).then((response) => response.json()).then((json) => {
-        starCategory(json.id, userId)
+        starCategory(json.id, userId,setCategories)
     });
 }
 
 const addCattegory = (newCategory, usertId, setOpen) => {
-    setOpen(true); 
+    setOpen(true);
 };
 
 
-
-
-export const starCategory = (category, user) => {
+export const starCategory = (category, user,setCategories) => {
     console.log("------");
     console.log(category);
     console.log(user);
@@ -96,7 +106,35 @@ export const starCategory = (category, user) => {
                 id: category,
             }
         }),
-    }).then((response) => response.json()).then((response)=>console.log(response));
+    }).then((response) => response.json()).then((response) => {
+        console.log(response);
+        upadateCategories(setCategories, user);
+    });
+};
+
+const upadateCategories = (setCategories, userId) => {
+    var header = new Headers({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    });
+    var path = 'http://rate-your-mate.herokuapp.com/api/v1/users';
+    fetch(path, {
+        method: 'GET',
+        headers: header,
+    })
+        .then((response) => {
+            return response.json()
+        })
+        .then((responseJSON) => {
+            console.log("response");
+            console.log(responseJSON);
+            setCategories(Object.values(responseJSON[userId].categories));
+            console.log("Update")
+
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 };
 
 
