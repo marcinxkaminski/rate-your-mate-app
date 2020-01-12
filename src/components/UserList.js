@@ -254,7 +254,10 @@ export default class UserList extends React.Component{
                             />
                         </View>
 
-                        <View style={{position: 'absolute', bottom: 5, right: '35%'}}>
+                        <View style={{position: 'absolute', bottom: 5, right: '35%', shadowColor: '#430098',
+                            shadowOffset: {width: 0, height: 0},
+                            shadowOpacity: 0.7,
+                            shadowRadius: 5,}}>
                             <TouchableOpacity onPress={this.filterUsers} style={styles.modalSearchBox}>
                                 <Icon name="cloud-search"  size={35} color="white" />
                             </TouchableOpacity>
@@ -320,6 +323,10 @@ const styles = StyleSheet.create({
         height:80,
         backgroundColor:'#79589F',
         borderRadius:100,
+        shadowColor: '#430098',
+        shadowOffset: {width: 0, height: 0},
+        shadowOpacity: 0.7,
+        shadowRadius: 7,
     },
     modalSearchBox: {
         borderWidth:1,

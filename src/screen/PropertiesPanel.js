@@ -51,7 +51,7 @@ export const PropertiesPanel = (props) => {
                         data={categoriesState}
                         renderItem={({item}) =>
                             <TouchableWithoutFeedback onPress={() => {
-                                showPIP(item.id, user.id,setCategories)
+                                showPIP(item.id, user.id, setCategories)
                             }
 
                             }>
@@ -70,7 +70,7 @@ export const PropertiesPanel = (props) => {
     )
 };
 
-export const starCategory = (category, user,setCategories) => {
+export const starCategory = (category, user, setCategories) => {
     fetch('http://rate-your-mate.herokuapp.com/api/v1/stars', {
         method: 'POST',
         headers: {
@@ -85,11 +85,11 @@ export const starCategory = (category, user,setCategories) => {
                 id: category,
             }
         }),
-    }).then(()=>upadateCategories(setCategories,user));
+    }).then(() => upadateCategories(setCategories, user));
 };
 
 
-const upadateCategories = (setCategories,userId) => {
+const upadateCategories = (setCategories, userId) => {
     var header = new Headers({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -114,9 +114,9 @@ const upadateCategories = (setCategories,userId) => {
 };
 
 
-const showPIP = (categry, user,setCategories) => {
+const showPIP = (categry, user, setCategories) => {
     console.log("Press");
-    starCategory(categry, user,setCategories);
+    starCategory(categry, user, setCategories);
 };
 
 const openLinkedIn = () => {
