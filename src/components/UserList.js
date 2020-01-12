@@ -4,8 +4,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Modal from "react-native-modal";
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
-
-
+import { Dropdown } from 'react-native-material-dropdown';
 
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
@@ -35,7 +34,8 @@ export default class UserList extends React.Component{
             }
             ],
         selectedItems: [],
-        filtredUsers: []
+        filtredUsers: [],
+        sort: 'descendingly',
     }
 
     componentDidMount = () => {
@@ -123,8 +123,31 @@ export default class UserList extends React.Component{
                 result.push(user)
             }
         });
-        this.setState({searchModal: false, filtredUsers: result});
+        this.setState({searchModal: false, filtredUsers: this.sortBobs(result)});
     }
+
+    sortBobs = (filterUsers) => {
+        return filterUsers.sort(this.descending);
+    }
+
+    descending = ( a, b ) => {
+        if(this.state.sort == 'descendingly'){
+            if ( a.stars > b.stars ){
+            return -1;
+            }
+            if ( a.stars < b.stars ){
+            return 1;
+            }
+            return 0;
+        }
+        if ( a.stars < b.stars ){
+            return -1;
+        }
+        if ( a.stars > b.stars ){
+            return 1;
+        }
+        return 0;
+      }
 
     getFilterdCategories = () => {
         var result = []
@@ -165,7 +188,7 @@ export default class UserList extends React.Component{
             )
         }
         return(
-            <View style={{height: '75%'}}>
+            <View style={{height: '75%', width: '100%'}}>
                 <FlatList 
                     style={styles.listContainer}
                     data={this.state.filtredUsers}
@@ -207,7 +230,7 @@ export default class UserList extends React.Component{
                     backdropTransitionInTiming={500}
                     backdropTransitionOutTiming={500}>
                     <View style={{ flex: 1, borderWidth:1, height: '100%', backgroundColor: '#FBFBFD', padding: 10}}>
-                        <View style={{height: '80%'}}>
+                        <View style={{height: '50%'}}>
                         <SectionedMultiSelect
                             items={this.state.categories}
                             uniqueKey="id"
@@ -219,6 +242,18 @@ export default class UserList extends React.Component{
                             selectedItems={this.state.selectedItems}
                         />
                         </View>
+                        <View style={{height: '28%', paddingHorizontal: 5}}>
+                            <Dropdown
+                                label='Sort'
+                                data={[{
+                                    value: 'ascending',
+                                }, {
+                                    value: 'descendingly',
+                                }]}
+                                onChangeText={(value) => this.setState({sort: value}) }
+                            />
+                        </View>
+
                         <View style={{position: 'absolute', bottom: 5, right: '35%'}}>
                             <TouchableOpacity onPress={this.filterUsers} style={styles.modalSearchBox}>
                                 <Icon name="cloud-search"  size={35} color="white" />
