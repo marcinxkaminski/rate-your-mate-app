@@ -22,6 +22,14 @@ export default class MainContainer extends React.Component{
     render = () => {
         return(
             <View style={styles.container}>
+                <View style={styles.searchContainer}>
+                    <TextInput
+                        style={styles.searchBox}
+                        onChangeText={text => this.setState({searchText: text})}
+                        value={this.state.searchText}
+                        placeholder="Search something"
+                    />
+                </View>
                 <UserList nav={this.state.nav}/>
             </View>
         )
@@ -31,9 +39,25 @@ export default class MainContainer extends React.Component{
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: '7%',
         alignItems: 'center',
         backgroundColor: '#fff',
         flex: 1,
+    },
+    searchContainer: {
+        backgroundColor: '#79589F',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        paddingBottom: 20,
+        height: '25%',
+        width: '100%',
+    },
+    searchBox: {
+        backgroundColor: 'white',
+        width: '90%',
+        padding: 5,
+        paddingLeft: 10,
+        borderRadius: 10,
+        marginTop: 5,
+        fontSize: 15
     },
   });

@@ -165,7 +165,7 @@ export default class UserList extends React.Component{
             )
         }
         return(
-            <View >
+            <View style={{height: '75%'}}>
                 <FlatList 
                     style={styles.listContainer}
                     data={this.state.filtredUsers}
