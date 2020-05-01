@@ -11,7 +11,9 @@
     "test": "jest",
     "test-coverage": "npm run test -- --coverage",
     "lint": "eslint './src/**/*.{js,jsx}'",
-    "lint-fix": "eslint --fix './src/**/*.{js,jsx}'"
+    "lint-fix": "eslint --fix './src/**/*.{js,jsx}'",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.5",
@@ -32,7 +34,8 @@
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.0.10",
-    "react-navigation-stack": "^2.0.13"
+    "react-navigation-stack": "^2.0.13",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -47,5 +50,6 @@
     "eslint-plugin-react-native": "^3.8.1",
     "jest": "^24.9.0"
   },
-  "private": true
+  "private": true,
+  "snyk": true
 }
